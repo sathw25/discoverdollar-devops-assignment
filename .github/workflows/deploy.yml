@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout code
@@ -32,13 +32,8 @@ jobs:
         push: true
         tags: sath10108/mean-frontend:latest
 
-    - name: Deploy to Azure VM
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.VM_HOST }}
-        username: ${{ secrets.VM_USER }}
-        password: ${{ secrets.VM_PASSWORD }}
-        script: |
-          cd ~/discoverdollar-devops-assignment
-          docker compose pull
-          docker compose up -d
+    - name: Deploy
+      run: |
+        cd ~/discoverdollar-devops-assignment
+        docker compose pull
+        docker compose up -d
