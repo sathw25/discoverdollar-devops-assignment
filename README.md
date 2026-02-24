@@ -1,27 +1,38 @@
-In this DevOps task, you need to build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15, and Node.js). The backend will be developed with Node.js and Express to provide REST APIs, connecting to a MongoDB database. The frontend will be an Angular application utilizing HTTPClient for communication.  
+# MEAN Stack DevOps Assignment
 
-The application will manage a collection of tutorials, where each tutorial includes an ID, title, description, and published status. Users will be able to create, retrieve, update, and delete tutorials. Additionally, a search box will allow users to find tutorials by title.
+## Tech Stack
+- MongoDB, Express, Angular, Node.js
+- Docker & Docker Compose
+- GitHub Actions CI/CD
+- Azure Ubuntu VM
+- Nginx Reverse Proxy
 
-## Project setup
+## Infrastructure
+- Cloud: Microsoft Azure
+- VM IP: 98.70.44.20
+- App URL: http://98.70.44.20
 
-### Node.js Server
+## Setup & Deployment
 
-cd backend
+### 1. Clone the repo
+```bash
+git clone https://github.com/sathw25/discoverdollar-devops-assignment
+```
 
-npm install
+### 2. Docker Compose
+```bash
+docker compose up -d
+```
 
-You can update the MongoDB credentials by modifying the `db.config.js` file located in `app/config/`.
+### 3. CI/CD Pipeline
+- GitHub Actions automatically builds and pushes Docker images on every push to main
+- Self-hosted runner on Azure VM handles deployment
+- Images hosted on Docker Hub: sath10108/mean-backend, sath10108/mean-frontend
 
-Run `node server.js`
+### 4. Nginx
+- Nginx installed on VM as reverse proxy
+- App accessible on port 80
 
-### Angular Client
-
-cd frontend
-
-npm install
-
-Run `ng serve --port 8081`
-
-You can modify the `src/app/services/tutorial.service.ts` file to adjust how the frontend interacts with the backend.
-
-Navigate to `http://localhost:8081/`
+## Docker Hub
+- Backend: sath10108/mean-backend
+- Frontend: sath10108/mean-frontend
