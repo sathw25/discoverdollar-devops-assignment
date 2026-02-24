@@ -39,13 +39,11 @@ jobs:
         VM_USER: ${{ secrets.VM_USER }}
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+        echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts
-        echo "=== KEY TYPE ==="
-        ssh-keygen -l -f ~/.ssh/deploy_key
-        echo "=== FIRST LINE ==="
-        head -1 ~/.ssh/deploy_key
-        echo "=== LAST LINE ==="
-        tail -1 ~/.ssh/deploy_key
-        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$VM_USER@$VM_HOST" "echo connected"
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$VM_USER@$VM_HOST" "
+          cd ~/discoverdollar-devops-assignment &&
+          docker compose pull &&
+          docker compose up -d
+        "
